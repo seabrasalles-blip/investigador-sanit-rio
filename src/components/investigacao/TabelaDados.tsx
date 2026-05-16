@@ -123,7 +123,7 @@ export function TabelaDados({ onNext }: { onNext: () => void }) {
                   <p className="mt-1 text-sm font-medium">{selected.recomendacao}</p>
                 </div>
                 <p className="text-sm leading-relaxed text-foreground/80">
-                  {selected.detalhe}
+                  <SciText>{selected.detalhe}</SciText>
                 </p>
               </div>
             </motion.div>
