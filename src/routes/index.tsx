@@ -82,18 +82,18 @@ function Index() {
               {step === 4 && <Hipoteses onNext={next} />}
               {step === 5 && (
                 <EscolhaUnica
-                  titulo="Atividade · fake news"
-                  pergunta="Essa mensagem é adequada?"
+                  titulo="Atividade 3 · informação confiável?"
+                  pergunta="Informação confiável ou conclusão apressada? Após a divulgação da investigação dos lotes, uma mensagem começou a circular em grupos de conversa. Com base nos princípios de análise de informações científicas e sanitárias, essa mensagem deve ser avaliada com cautela porque:"
                   variant="fake"
-                  mensagem="Todos os detergentes estão contaminados! Pare de usar qualquer produto de limpeza imediatamente!"
+                  mensagem="Foi encontrada uma bactéria perigosa em produtos de limpeza. Melhor parar de usar todos os detergentes até segunda ordem."
                   opcoes={FAKE_NEWS_OPCOES}
                   onNext={next}
                 />
               )}
               {step === 6 && (
                 <EscolhaUnica
-                  titulo="Atividade · reescrita responsável"
-                  pergunta="Qual é a melhor versão para comunicar o problema sem espalhar pânico?"
+                  titulo="Atividade 4 · comunicar sem pânico"
+                  pergunta="Como comunicar um risco sem gerar pânico? Uma equipe precisa reescrever a mensagem anterior para orientar a população de forma responsável, sem minimizar o risco e sem espalhar alarme desnecessário. Qual das versões abaixo apresenta a comunicação mais adequada?"
                   variant="reescrita"
                   opcoes={REESCRITA_OPCOES}
                   onNext={next}
