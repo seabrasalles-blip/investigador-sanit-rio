@@ -67,7 +67,7 @@ export function Hipoteses({ onNext }: { onNext: () => void }) {
                   animate={{ opacity: 1 }}
                   className="mt-1 px-3 text-[11px] leading-relaxed text-muted-foreground"
                 >
-                  {h.feedback}
+                  <SciText>{h.feedback}</SciText>
                 </motion.p>
               )}
             </div>
