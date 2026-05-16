@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LOTES, CATEGORIAS, type Lote } from "./data";
+import { SciText } from "./text";
 import { motion } from "framer-motion";
 
 type Atribuicao = Record<string, Lote["categoria"] | null>;
