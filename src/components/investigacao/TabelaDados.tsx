@@ -3,6 +3,7 @@ import { Tag, ArrowRight, X, AlertCircle, CheckCircle2, RotateCw } from "lucide-
 import { LOTES, type Lote } from "./data";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { SciText } from "./text";
 
 function StatusIcon({ categoria }: { categoria: Lote["categoria"] }) {
   if (categoria === "suspender")
