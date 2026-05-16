@@ -3,6 +3,7 @@ import { Tag, ArrowRight, X, AlertCircle, CheckCircle2, RotateCw } from "lucide-
 import { LOTES, type Lote } from "./data";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { SciText } from "./text";
 
 function StatusIcon({ categoria }: { categoria: Lote["categoria"] }) {
   if (categoria === "suspender")
@@ -51,7 +52,7 @@ export function TabelaDados({ onNext }: { onNext: () => void }) {
               </p>
               <p className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
                 <StatusIcon categoria={l.categoria} />
-                {l.resultado}
+                <SciText>{l.resultado}</SciText>
               </p>
             </div>
             {seen.has(l.id) && (
@@ -113,7 +114,7 @@ export function TabelaDados({ onNext }: { onNext: () => void }) {
                   <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
                     Resultado
                   </p>
-                  <p className="mt-1 text-sm font-medium">{selected.resultado}</p>
+                  <p className="mt-1 text-sm font-medium"><SciText>{selected.resultado}</SciText></p>
                 </div>
                 <div className="rounded-xl border border-border bg-background p-3">
                   <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
@@ -122,7 +123,7 @@ export function TabelaDados({ onNext }: { onNext: () => void }) {
                   <p className="mt-1 text-sm font-medium">{selected.recomendacao}</p>
                 </div>
                 <p className="text-sm leading-relaxed text-foreground/80">
-                  {selected.detalhe}
+                  <SciText>{selected.detalhe}</SciText>
                 </p>
               </div>
             </motion.div>

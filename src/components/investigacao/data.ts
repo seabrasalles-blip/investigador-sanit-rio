@@ -134,32 +134,42 @@ export const FAKE_NEWS_OPCOES = [
   {
     id: "A",
     texto:
-      "Sim, porque qualquer notícia sobre bactéria deve ser compartilhada rapidamente.",
+      "apresenta uma orientação preventiva adequada, pois qualquer risco microbiológico exige a suspensão imediata de todos os produtos semelhantes.",
     correta: false,
     feedback:
-      "Compartilhar sem verificar amplia desinformação. A velocidade não substitui a checagem da fonte.",
+      "Ainda não. A preocupação com a saúde é importante, mas a alternativa generaliza o risco. A presença de contaminação em determinados lotes não permite concluir que todos os produtos semelhantes devem ser suspensos. A decisão sanitária precisa considerar marca, lote, resultado do teste e orientação oficial.",
   },
   {
     id: "B",
-    texto: "Sim, porque produtos de limpeza nunca podem ter microrganismos.",
-    correta: false,
+    texto:
+      "transforma uma informação sobre lotes específicos em uma recomendação generalizada, sem indicar fonte oficial, marca, lote ou orientação sanitária.",
+    correta: true,
     feedback:
-      "Premissa incorreta. Produtos saneantes passam por controle justamente porque a contaminação é possível e precisa ser monitorada.",
+      "Correto! A mensagem transforma uma informação específica em uma recomendação geral e alarmista. Para avaliar o risco, é necessário saber quais produtos e lotes estão envolvidos, consultar fontes oficiais e seguir as orientações dos órgãos responsáveis.",
   },
   {
     id: "C",
     texto:
-      "Não, porque generaliza o problema, não informa lotes específicos e não apresenta fonte oficial.",
-    correta: true,
+      "está correta ao priorizar a proteção da saúde, já que mensagens informais costumam circular antes dos comunicados oficiais.",
+    correta: false,
     feedback:
-      "Avaliação adequada. Uma comunicação responsável identifica os lotes envolvidos e cita fontes oficiais, como a Anvisa.",
+      "Ainda não. A proteção da saúde é essencial, mas mensagens informais não substituem comunicados oficiais. Informações sem fonte, sem dados verificáveis e sem orientação técnica podem gerar medo e decisões inadequadas.",
   },
   {
     id: "D",
-    texto: "Não, porque a Anvisa nunca investiga produtos de limpeza.",
+    texto:
+      "deveria ser aceita provisoriamente, pois, em temas de saúde, a rapidez da divulgação é mais importante do que a verificação das evidências.",
     correta: false,
     feedback:
-      "Incorreto. A Anvisa regula e investiga produtos saneantes no Brasil.",
+      "Ainda não. A rapidez na divulgação não pode ser mais importante que a verificação das evidências. Compartilhar informações sem confirmação amplia a desinformação e dificulta a orientação correta da população.",
+  },
+  {
+    id: "E",
+    texto:
+      "é cientificamente válida porque a presença de uma bactéria em um produto comprova que todos os produtos da mesma categoria estão contaminados.",
+    correta: false,
+    feedback:
+      "Ainda não. A presença de bactéria em um produto ou lote específico não comprova que todos os produtos da mesma categoria estejam contaminados. A ciência trabalha com evidências delimitadas: amostras, lotes, condições de produção e resultados laboratoriais.",
   },
 ];
 
@@ -167,33 +177,42 @@ export const REESCRITA_OPCOES = [
   {
     id: "A",
     texto:
-      "Todos os produtos de limpeza devem ser jogados fora imediatamente.",
+      "“Produtos de limpeza podem estar contaminados. Para evitar riscos, recomenda-se interromper o uso de todos eles até que novas informações sejam divulgadas.”",
     correta: false,
     feedback:
-      "Generaliza e provoca pânico. Não orienta o consumidor sobre o que de fato verificar.",
+      "Ainda não. Essa mensagem parece preventiva, mas continua generalizando o problema. Ela recomenda interromper o uso de todos os produtos, mesmo que a investigação envolva apenas lotes específicos. Uma comunicação responsável deve orientar a verificação do lote e a consulta a fontes oficiais.",
   },
   {
     id: "B",
     texto:
-      "Há informações sobre lotes específicos de produtos saneantes sob investigação. Consulte fontes oficiais, verifique o número do lote no rótulo e siga as orientações da Anvisa.",
+      "“Há investigação sobre possíveis problemas em determinados lotes de produtos saneantes. Verifique o número do lote no rótulo e consulte as orientações oficiais da Anvisa e da empresa responsável.”",
     correta: true,
     feedback:
-      "Comunicação responsável: específica, orienta o consumidor e indica fonte oficial.",
+      "Correto! Essa é a comunicação mais adequada porque informa o problema sem alarmismo, evita generalizações e orienta uma ação concreta: verificar o lote e consultar fontes oficiais, como a Anvisa e a empresa responsável.",
   },
   {
     id: "C",
     texto:
-      "Não existe risco nenhum, então não é preciso buscar informações.",
+      "“A presença de bactérias em produtos de limpeza não representa risco relevante, por isso os consumidores podem continuar usando qualquer produto normalmente.”",
     correta: false,
     feedback:
-      "Minimiza um risco real. Ignorar evidências é tão problemático quanto exagerá-las.",
+      "Ainda não. Essa alternativa minimiza o risco. Embora a presença da bactéria não signifique perigo para todas as pessoas em qualquer situação, ela pode representar risco para grupos vulneráveis ou em contato com feridas e mucosas. Por isso, a orientação oficial deve ser seguida.",
   },
   {
     id: "D",
     texto:
-      "Se uma mensagem viralizou, ela já pode ser considerada verdadeira.",
+      "“Como ainda existem dúvidas, a população deve aguardar novas mensagens nas redes sociais antes de decidir o que fazer com os produtos que possui em casa.”",
     correta: false,
     feedback:
-      "Viralização não é critério de veracidade. Informação confiável depende de fonte e evidência.",
+      "Ainda não. Redes sociais não são a fonte mais segura para orientar decisões sobre saúde pública. O ideal é consultar comunicados oficiais e informações verificáveis, especialmente quando há risco sanitário envolvido.",
+  },
+  {
+    id: "E",
+    texto:
+      "“A contaminação de alguns produtos mostra que detergentes não são seguros e devem ser substituídos por soluções caseiras de limpeza.”",
+    correta: false,
+    feedback:
+      "Ainda não. Essa alternativa tira uma conclusão ampla demais a partir de um problema específico. A contaminação de alguns lotes não significa que todos os detergentes sejam inseguros. Além disso, soluções caseiras também podem apresentar riscos quando usadas sem orientação adequada.",
   },
 ];
+

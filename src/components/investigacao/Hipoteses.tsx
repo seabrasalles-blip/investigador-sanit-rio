@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowRight, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HIPOTESES } from "./data";
+import { SciText } from "./text";
 import { motion } from "framer-motion";
 
 export function Hipoteses({ onNext }: { onNext: () => void }) {
@@ -66,7 +67,7 @@ export function Hipoteses({ onNext }: { onNext: () => void }) {
                   animate={{ opacity: 1 }}
                   className="mt-1 px-3 text-[11px] leading-relaxed text-muted-foreground"
                 >
-                  {h.feedback}
+                  <SciText>{h.feedback}</SciText>
                 </motion.p>
               )}
             </div>
