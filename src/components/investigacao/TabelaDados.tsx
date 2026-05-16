@@ -114,7 +114,7 @@ export function TabelaDados({ onNext }: { onNext: () => void }) {
                   <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
                     Resultado
                   </p>
-                  <p className="mt-1 text-sm font-medium">{selected.resultado}</p>
+                  <p className="mt-1 text-sm font-medium"><SciText>{selected.resultado}</SciText></p>
                 </div>
                 <div className="rounded-xl border border-border bg-background p-3">
                   <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
