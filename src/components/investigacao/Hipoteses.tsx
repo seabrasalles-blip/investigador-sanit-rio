@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowRight, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HIPOTESES } from "./data";
+import { SciText } from "./text";
 import { motion } from "framer-motion";
 
 export function Hipoteses({ onNext }: { onNext: () => void }) {
