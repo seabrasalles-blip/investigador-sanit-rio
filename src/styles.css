@@ -44,7 +44,6 @@
   --radius: 0.875rem;
   /* Investigative science palette */
   --background: oklch(0.985 0.005 230);
-  --foreground: oklch(0.२० 0.04 250);
   --foreground: oklch(0.20 0.04 250);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.20 0.04 250);
