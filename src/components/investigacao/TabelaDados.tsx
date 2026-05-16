@@ -51,7 +51,7 @@ export function TabelaDados({ onNext }: { onNext: () => void }) {
               </p>
               <p className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
                 <StatusIcon categoria={l.categoria} />
-                {l.resultado}
+                <SciText>{l.resultado}</SciText>
               </p>
             </div>
             {seen.has(l.id) && (
