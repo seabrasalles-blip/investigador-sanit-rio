@@ -1,14 +1,12 @@
 import { Fragment } from "react";
 
-// Renders a string with scientific names rendered in italics.
-// Currently italicizes "Pseudomonas aeruginosa" and standalone "Pseudomonas".
+// Renders a string with scientific bacterium names in italics.
 export function SciText({ children }: { children: string }) {
-  const regex = /(Pseudomonas aeruginosa|Pseudomonas)/g;
-  const parts = children.split(regex);
+  const parts = children.split(/(Pseudomonas aeruginosa|Pseudomonas)/g);
   return (
     <>
       {parts.map((part, i) =>
-        regex.test(part) ? (
+        part === "Pseudomonas aeruginosa" || part === "Pseudomonas" ? (
           <em key={i} className="italic">
             {part}
           </em>
