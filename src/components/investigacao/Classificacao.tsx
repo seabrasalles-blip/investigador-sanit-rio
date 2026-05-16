@@ -30,7 +30,7 @@ export function Classificacao({ onNext }: { onNext: () => void }) {
         </h2>
       </div>
 
-      <div className="flex-1 space-y-2.5 overflow-hidden">
+      <div className="flex-1 space-y-2.5 overflow-y-auto pr-1">
         {LOTES.map((l) => {
           const escolha = atrib[l.id];
           const correto = confirmado && escolha === l.categoria;
