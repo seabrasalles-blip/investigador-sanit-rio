@@ -55,7 +55,7 @@ export function Classificacao({ onNext }: { onNext: () => void }) {
                 </span>
               </p>
               <p className="mt-0.5 text-xs text-muted-foreground">
-                {l.resultado}
+                <SciText>{l.resultado}</SciText>
               </p>
               <div className="mt-2.5 grid grid-cols-3 gap-1.5">
                 {CATEGORIAS.map((c) => {
