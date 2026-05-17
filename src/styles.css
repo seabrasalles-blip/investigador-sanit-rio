@@ -36,8 +36,8 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-investigate: var(--investigate);
   --color-investigate-foreground: var(--investigate-foreground);
-  --font-display: Arial, Helvetica, sans-serif;
-  --font-sans: Arial, Helvetica, sans-serif;
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -107,23 +107,12 @@
   html, body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: normal;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 600;
-    letter-spacing: normal;
-    line-height: 1.25;
-  }
-
-  p, li, span, a, button, label, input, textarea {
-    line-height: 1.5;
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
   }
 }

@@ -27,6 +27,12 @@ export const Route = createFileRoute("/")({
           "Como a ciência investiga um problema? Atividade investigativa para o Ensino Médio.",
       },
     ],
+    links: [
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600;700&display=swap",
+      },
+    ],
   }),
   component: Index,
 });
@@ -50,12 +56,8 @@ function Index() {
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-background p-4">
       <div
-        className="relative flex w-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-xl"
-        style={{
-          aspectRatio: "2 / 3",
-          width: "min(720px, 100%, calc((100vh - 2rem) * 2 / 3))",
-          maxHeight: "calc(100vh - 2rem)",
-        }}
+        className="relative flex w-full max-w-[720px] flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-xl"
+        style={{ height: "min(1080px, calc(100vh - 2rem))" }}
       >
         {step > 0 && (
           <div className="border-b border-border bg-card/80 px-6 py-4 backdrop-blur">
