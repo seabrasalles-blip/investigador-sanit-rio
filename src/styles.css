@@ -36,7 +36,7 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-investigate: var(--investigate);
   --color-investigate-foreground: var(--investigate-foreground);
-  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-display: "Work Sans", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
