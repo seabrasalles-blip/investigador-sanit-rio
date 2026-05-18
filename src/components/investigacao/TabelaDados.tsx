@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Tag, ArrowRight, X, AlertCircle, CheckCircle2, RotateCw } from "lucide-react";
+import {
+  Tag,
+  ArrowRight,
+  X,
+  AlertCircle,
+  CheckCircle2,
+  RotateCw,
+} from "lucide-react";
 import { LOTES, type Lote } from "./data";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,38 +30,40 @@ export function TabelaDados({ onNext }: { onNext: () => void }) {
   }
 
   return (
-    <div className="flex h-full flex-col px-6 py-8">
-      <div className="mb-4 px-2">
+    <div className="flex h-full flex-col px-6 py-5">
+      <div className="mb-3 px-2">
         <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           Dados laboratoriais
         </span>
-        <h2 className="mt-1 font-display text-2xl leading-tight">
+        <h2 className="mt-1 font-display text-[1.55rem] leading-tight">
           Toque em cada lote para investigar
         </h2>
       </div>
 
-      <div className="flex-1 space-y-2 overflow-hidden">
+      <div className="flex-1 space-y-2 overflow-visible">
         {LOTES.map((l) => (
           <button
             key={l.id}
             onClick={() => open(l)}
-            className="group flex w-full items-center gap-3 rounded-xl border border-border bg-card p-3.5 text-left transition hover:border-primary/40 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-ring"
+            className="group flex w-full items-center gap-3 rounded-xl border border-border bg-card p-3 text-left transition hover:border-primary/40 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-secondary text-foreground/70">
               <Tag className="h-4 w-4" />
             </div>
+
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold text-foreground">
+              <p className="text-[14px] font-semibold text-foreground">
                 {l.produto}{" "}
                 <span className="font-normal text-muted-foreground">
                   · Lote {l.lote}
                 </span>
               </p>
-              <p className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
+              <p className="mt-0.5 flex items-center gap-1.5 text-[12px] text-muted-foreground">
                 <StatusIcon categoria={l.categoria} />
                 <SciText>{l.resultado}</SciText>
               </p>
             </div>
+
             {seen.has(l.id) && (
               <span className="shrink-0 text-[10px] uppercase tracking-wider text-success">
                 visto
@@ -64,7 +73,7 @@ export function TabelaDados({ onNext }: { onNext: () => void }) {
         ))}
       </div>
 
-      <div className="pt-6">
+      <div className="pt-4">
         <Button
           onClick={onNext}
           disabled={seen.size < LOTES.length}
@@ -99,7 +108,9 @@ export function TabelaDados({ onNext }: { onNext: () => void }) {
                   <p className="text-xs uppercase tracking-wider text-muted-foreground">
                     Lote {selected.lote}
                   </p>
-                  <h3 className="font-display text-2xl">{selected.produto}</h3>
+                  <h3 className="font-display text-2xl">
+                    {selected.produto}
+                  </h3>
                 </div>
                 <button
                   onClick={() => setSelected(null)}
@@ -114,14 +125,20 @@ export function TabelaDados({ onNext }: { onNext: () => void }) {
                   <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
                     Resultado
                   </p>
-                  <p className="mt-1 text-sm font-medium"><SciText>{selected.resultado}</SciText></p>
+                  <p className="mt-1 text-sm font-medium">
+                    <SciText>{selected.resultado}</SciText>
+                  </p>
                 </div>
+
                 <div className="rounded-xl border border-border bg-background p-3">
                   <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
                     Recomendação
                   </p>
-                  <p className="mt-1 text-sm font-medium">{selected.recomendacao}</p>
+                  <p className="mt-1 text-sm font-medium">
+                    {selected.recomendacao}
+                  </p>
                 </div>
+
                 <p className="text-sm leading-relaxed text-foreground/80">
                   <SciText>{selected.detalhe}</SciText>
                 </p>
