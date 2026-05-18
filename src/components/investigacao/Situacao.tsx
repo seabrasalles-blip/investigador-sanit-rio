@@ -6,8 +6,8 @@ export function Situacao({ onNext }: { onNext: () => void }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex h-full flex-col px-8 py-10">
-      <div className="mb-6 flex items-center gap-3">
+<div className="flex h-full flex-col px-7 py-6">
+      <div className="mb-4 flex items-center gap-3">
         <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-investigate/15 text-investigate">
           <Microscope className="h-6 w-6" strokeWidth={1.7} />
         </div>
