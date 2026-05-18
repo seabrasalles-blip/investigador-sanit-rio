@@ -54,11 +54,10 @@ function Index() {
   const restart = () => setStep(0);
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center bg-background p-4">
-      <div
-        className="relative flex w-full max-w-[720px] flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-xl"
-        style={{ height: "min(1080px, calc(100vh - 2rem))" }}
-      >
+<main className="flex h-screen w-full items-center justify-center overflow-hidden bg-background p-0">
+  <div
+    className="relative flex h-full w-full max-w-[768px] flex-col overflow-hidden rounded-none border border-border bg-card shadow-xl md:h-[min(560px,100vh)] md:rounded-3xl"
+  >
         {step > 0 && (
           <div className="border-b border-border bg-card/80 px-6 py-4 backdrop-blur">
             <ProgressBar step={step} total={LABELS.length} labels={LABELS} />
