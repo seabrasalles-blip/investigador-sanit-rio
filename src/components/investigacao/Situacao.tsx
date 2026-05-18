@@ -6,7 +6,7 @@ export function Situacao({ onNext }: { onNext: () => void }) {
   const [open, setOpen] = useState(false);
 
   return (
-<div className="flex h-full flex-col px-7 py-6">
+    <div className="flex h-full flex-col px-7 py-6">
       <div className="mb-4 flex items-center gap-3">
         <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-investigate/15 text-investigate">
           <Microscope className="h-6 w-6" strokeWidth={1.7} />
@@ -17,7 +17,7 @@ export function Situacao({ onNext }: { onNext: () => void }) {
       </div>
 
       <div className="flex items-start justify-between gap-3">
-        <h2 className="font-display text-3xl leading-tight text-foreground">
+        <h2 className="font-display text-[1.65rem] leading-tight text-foreground">
           Lotes de produtos saneantes passaram por testes microbiológicos.
         </h2>
         <button
@@ -30,7 +30,7 @@ export function Situacao({ onNext }: { onNext: () => void }) {
         </button>
       </div>
 
-      <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-foreground/80">
+      <div className="mt-4 space-y-3 text-[14px] leading-relaxed text-foreground/80">
         <p>
           Um laboratório de controle de qualidade analisou amostras de cinco
           lotes diferentes de detergentes, lava-roupas e desinfetantes para
@@ -43,7 +43,7 @@ export function Situacao({ onNext }: { onNext: () => void }) {
         </p>
       </div>
 
-      <div className="mt-6 rounded-2xl border border-border bg-secondary/60 p-5">
+      <div className="mt-4 rounded-2xl border border-border bg-secondary/60 p-4">
         <p className="text-sm font-medium text-foreground">
           O que orienta a decisão sanitária?
         </p>
@@ -53,7 +53,7 @@ export function Situacao({ onNext }: { onNext: () => void }) {
         </p>
       </div>
 
-      <div className="mt-auto pt-8">
+      <div className="mt-auto pt-4">
         <Button onClick={onNext} className="h-12 w-full rounded-full text-base">
           Ver dados <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
