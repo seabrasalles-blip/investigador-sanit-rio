@@ -88,7 +88,7 @@ export function EscolhaUnica({
         </div>
       )}
 
-      <h2 className="px-1 font-display text-xl leading-snug">{pergunta}</h2>
+      <p className="px-1 text-sm leading-relaxed text-foreground">{pergunta}</p>
 
       <div className="mt-4 flex-1 space-y-2 overflow-y-auto pr-1">
         {ordered.map((o) => {
