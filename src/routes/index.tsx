@@ -59,7 +59,7 @@ function Index() {
     className="relative flex h-full w-full max-w-[768px] flex-col overflow-hidden rounded-none border border-border bg-card shadow-xl md:h-[min(560px,100vh)] md:rounded-3xl"
   >
         {step > 0 && (
-          <div className="border-b border-border bg-card/80 px-6 py-4 backdrop-blur">
+         <div className="border-b border-border bg-card/80 px-5 py-3 backdrop-blur">
             <ProgressBar step={step} total={LABELS.length} labels={LABELS} />
           </div>
         )}
