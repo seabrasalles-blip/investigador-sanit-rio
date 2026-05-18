@@ -115,6 +115,7 @@ export function EscolhaUnica({
                 }}
               >
                 <span className="mr-2 font-semibold text-foreground/60">{o.id}.</span>
+                <span className="mr-2 font-semibold text-foreground/60">{o.id}.</span>
                 {o.texto}
               </button>
               {confirmado && ativo && (
