@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import { ArrowRight, AlertTriangle, ShieldCheck, RefreshCw } from "lucide-react";
+import { AlertTriangle, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { FeedbackPanel } from "./FeedbackPanel";
 
 type Opt = { id: string; texto: string; correta: boolean; feedback: string };
 
@@ -36,13 +36,13 @@ export function EscolhaUnica({
   const [confirmado, setConfirmado] = useState(false);
 
   const ordered = useMemo(() => {
-    // round 0 = original order; subsequent rounds shuffled
     return round === 0 ? opcoes : shuffle(opcoes);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [round, opcoes]);
 
-  const acertou = confirmado && !!sel && opcoes.find((o) => o.id === sel)?.correta;
-  const errou = confirmado && !acertou;
+  const selecionada = sel ? opcoes.find((o) => o.id === sel) : null;
+  const acertou = confirmado && !!selecionada?.correta;
+  const errou = confirmado && !!selecionada && !selecionada.correta;
 
   const Icon = variant === "fake" ? AlertTriangle : ShieldCheck;
   const tint =
@@ -93,66 +93,52 @@ export function EscolhaUnica({
       <div className="mt-4 flex-1 space-y-2 overflow-y-auto pr-1">
         {ordered.map((o) => {
           const ativo = sel === o.id;
-          const mostrarCerto = confirmado && acertou && o.correta;
-          const mostrarErrado = confirmado && ativo && !o.correta;
           return (
-            <div key={o.id}>
-              <button
-                onClick={() => !confirmado && setSel(o.id)}
-                disabled={confirmado}
-                className="w-full rounded-xl border p-3 text-left text-sm transition"
-                style={{
-                  borderColor: mostrarCerto
-                    ? "var(--color-success)"
-                    : mostrarErrado
-                      ? "var(--color-destructive)"
-                      : ativo
-                        ? "var(--color-primary)"
-                        : "var(--color-border)",
-                  backgroundColor: ativo
-                    ? "color-mix(in oklab, var(--color-primary) 8%, var(--color-card))"
-                    : "var(--color-card)",
-                }}
-              >
-                {o.texto}
-              </button>
-              {confirmado && ativo && (
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="mt-1 px-3 text-[11px] leading-relaxed text-muted-foreground"
-                >
-                  {o.feedback}
-                </motion.p>
-              )}
-            </div>
+            <button
+              key={o.id}
+              onClick={() => !confirmado && setSel(o.id)}
+              disabled={confirmado}
+              className="w-full rounded-xl border p-3 text-left text-sm transition"
+              style={{
+                borderColor: ativo
+                  ? "var(--color-primary)"
+                  : "var(--color-border)",
+                backgroundColor: ativo
+                  ? "color-mix(in oklab, var(--color-primary) 8%, var(--color-card))"
+                  : "var(--color-card)",
+              }}
+            >
+              {o.texto}
+            </button>
           );
         })}
       </div>
 
       <div className="pt-4">
-        {!confirmado ? (
-          <Button
-            onClick={() => setConfirmado(true)}
-            disabled={!sel}
-            className="h-12 w-full rounded-full text-base"
-          >
-            Confirmar resposta
-          </Button>
-        ) : errou ? (
-          <Button
-            onClick={tentarNovamente}
-            variant="outline"
-            className="h-12 w-full rounded-full text-base"
-          >
-            <RefreshCw className="mr-2 h-4 w-4" /> Tentar novamente
-          </Button>
-        ) : (
-          <Button onClick={onNext} className="h-12 w-full rounded-full text-base">
-            Continuar <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        )}
+        <Button
+          onClick={() => setConfirmado(true)}
+          disabled={!sel || confirmado}
+          className="h-12 w-full rounded-full text-base"
+        >
+          Confirmar resposta
+        </Button>
       </div>
+
+      <FeedbackPanel
+        open={confirmado && !!selecionada}
+        tipo={acertou ? "acerto" : "erro"}
+        titulo={acertou ? "Boa investigação!" : "Reveja as evidências"}
+        onRetry={tentarNovamente}
+        onContinue={onNext}
+        continueLabel="Continuar"
+      >
+        {errou && (
+          <p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">
+            Sua resposta: {selecionada?.texto}
+          </p>
+        )}
+        <p>{selecionada?.feedback}</p>
+      </FeedbackPanel>
     </div>
   );
 }

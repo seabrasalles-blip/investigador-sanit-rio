@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { ArrowRight, Lightbulb } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HIPOTESES } from "./data";
 import { SciText } from "./text";
-import { motion } from "framer-motion";
+import { FeedbackPanel } from "./FeedbackPanel";
 
 export function Hipoteses({ onNext }: { onNext: () => void }) {
   const [sel, setSel] = useState<Set<string>>(new Set());
@@ -18,6 +18,23 @@ export function Hipoteses({ onNext }: { onNext: () => void }) {
       return n;
     });
   }
+
+  const tudoCorreto =
+    confirmado &&
+    HIPOTESES.every((h) => (sel.has(h.id) ? h.correta : !h.correta));
+
+  const acertadas = HIPOTESES.filter((h) => sel.has(h.id) && h.correta);
+  const incorretasMarcadas = HIPOTESES.filter(
+    (h) => sel.has(h.id) && !h.correta,
+  );
+  const corretasNaoMarcadas = HIPOTESES.filter(
+    (h) => !sel.has(h.id) && h.correta,
+  );
+
+  const tentarNovamente = () => {
+    setConfirmado(false);
+    setSel(new Set());
+  };
 
   return (
     <div className="flex h-full flex-col px-6 py-7">
@@ -37,59 +54,88 @@ export function Hipoteses({ onNext }: { onNext: () => void }) {
       <div className="mt-4 flex-1 space-y-2 overflow-y-auto pr-1">
         {HIPOTESES.map((h) => {
           const ativo = sel.has(h.id);
-          const certo = confirmado && ((ativo && h.correta) || (!ativo && !h.correta));
-          const errado = confirmado && !certo;
           return (
-            <div key={h.id}>
-              <button
-                onClick={() => toggle(h.id)}
-                disabled={confirmado}
-                className="w-full rounded-xl border p-3 text-left text-sm transition"
-                style={{
-                  borderColor: confirmado
-                    ? certo
-                      ? "var(--color-success)"
-                      : "var(--color-destructive)"
-                    : ativo
-                      ? "var(--color-primary)"
-                      : "var(--color-border)",
-                  backgroundColor: ativo
-                    ? "color-mix(in oklab, var(--color-primary) 8%, var(--color-card))"
-                    : "var(--color-card)",
-                }}
-              >
-                <span className="mr-2 font-semibold text-foreground/60">{h.id}.</span>
-                {h.texto}
-              </button>
-              {confirmado && (
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="mt-1 px-3 text-[11px] leading-relaxed text-muted-foreground"
-                >
-                  <SciText>{h.feedback}</SciText>
-                </motion.p>
-              )}
-            </div>
+            <button
+              key={h.id}
+              onClick={() => toggle(h.id)}
+              disabled={confirmado}
+              className="w-full rounded-xl border p-3 text-left text-sm transition"
+              style={{
+                borderColor: ativo
+                  ? "var(--color-primary)"
+                  : "var(--color-border)",
+                backgroundColor: ativo
+                  ? "color-mix(in oklab, var(--color-primary) 8%, var(--color-card))"
+                  : "var(--color-card)",
+              }}
+            >
+              {h.texto}
+            </button>
           );
         })}
       </div>
 
       <div className="pt-4">
-        {!confirmado ? (
-          <Button
-            onClick={() => setConfirmado(true)}
-            disabled={sel.size === 0}
-            className="h-12 w-full rounded-full text-base"
-          >
-            Confirmar hipóteses
-          </Button>
-        ) : (
-          <Button onClick={onNext} className="h-12 w-full rounded-full text-base">
-            Continuar <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        )}
+        <Button
+          onClick={() => setConfirmado(true)}
+          disabled={sel.size === 0 || confirmado}
+          className="h-12 w-full rounded-full text-base"
+        >
+          Confirmar hipóteses
+        </Button>
       </div>
+
+      <FeedbackPanel
+        open={confirmado}
+        tipo={tudoCorreto ? "acerto" : "erro"}
+        titulo={
+          tudoCorreto ? "Hipóteses bem sustentadas" : "Reveja as hipóteses"
+        }
+        onRetry={tentarNovamente}
+        onContinue={onNext}
+        retryLabel="Refazer seleção"
+      >
+        {tudoCorreto ? (
+          <div className="space-y-2">
+            {acertadas.map((h) => (
+              <p key={h.id}>
+                <SciText>{h.feedback}</SciText>
+              </p>
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {incorretasMarcadas.length > 0 && (
+              <div>
+                <p className="mb-1 text-xs uppercase tracking-wider text-destructive">
+                  Hipóteses marcadas que não se sustentam
+                </p>
+                <ul className="list-disc space-y-1.5 pl-5">
+                  {incorretasMarcadas.map((h) => (
+                    <li key={h.id}>
+                      <SciText>{h.feedback}</SciText>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {corretasNaoMarcadas.length > 0 && (
+              <div>
+                <p className="mb-1 text-xs uppercase tracking-wider text-warning-foreground">
+                  Hipóteses que merecem atenção
+                </p>
+                <ul className="list-disc space-y-1.5 pl-5">
+                  {corretasNaoMarcadas.map((h) => (
+                    <li key={h.id}>
+                      <SciText>{h.feedback}</SciText>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+      </FeedbackPanel>
     </div>
   );
 }

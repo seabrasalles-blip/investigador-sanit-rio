@@ -1,58 +1,53 @@
 import { useState } from "react";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LOTES, CATEGORIAS, type Lote } from "./data";
-import { motion, AnimatePresence } from "framer-motion";
+import { FeedbackPanel } from "./FeedbackPanel";
 
 type Atribuicao = Record<string, Lote["categoria"] | null>;
 
 function feedbackErro(l: Lote): string {
   if (l.categoria === "suspender") {
-    return "Reavalie os dados deste lote. A presença confirmada da bactéria exige uma medida sanitária mais cautelosa.";
+    return "A presença confirmada da bactéria exige uma medida sanitária mais cautelosa.";
   }
   if (l.categoria === "repetir") {
-    return "Reavalie os dados deste lote. Quando o resultado é inconclusivo, é necessário obter nova evidência antes de liberar o produto.";
+    return "Quando o resultado é inconclusivo, é necessário obter nova evidência antes de liberar o produto.";
   }
-  return "Reavalie os dados deste lote. A ausência de contaminação detectável permite uma conduta menos restritiva, com acompanhamento.";
+  return "A ausência de contaminação detectável permite uma conduta menos restritiva, com acompanhamento.";
 }
 
 export function Classificacao({ onNext }: { onNext: () => void }) {
   const [atrib, setAtrib] = useState<Atribuicao>(
     Object.fromEntries(LOTES.map((l) => [l.id, null])) as Atribuicao,
   );
-  const [checked, setChecked] = useState<Record<string, boolean>>({});
-  const [globalMsg, setGlobalMsg] = useState<
-    { tipo: "erro" | "ok"; texto: string } | null
-  >(null);
+  const [verificado, setVerificado] = useState(false);
 
   const allSet = Object.values(atrib).every(Boolean);
   const allCorrect =
     allSet && LOTES.every((l) => atrib[l.id] === l.categoria);
 
+  const errados = LOTES.filter(
+    (l) => atrib[l.id] !== null && atrib[l.id] !== l.categoria,
+  );
+
   function set(id: string, cat: Lote["categoria"]) {
+    if (verificado) return;
     setAtrib((a) => ({ ...a, [id]: cat }));
-    setChecked((c) => ({ ...c, [id]: false }));
-    setGlobalMsg(null);
   }
 
   function verificar() {
-    const novos: Record<string, boolean> = {};
-    LOTES.forEach((l) => {
-      novos[l.id] = true;
+    setVerificado(true);
+  }
+
+  function tentarNovamente() {
+    setVerificado(false);
+    setAtrib((a) => {
+      const novo: Atribuicao = { ...a };
+      errados.forEach((l) => {
+        novo[l.id] = null;
+      });
+      return novo;
     });
-    setChecked(novos);
-    if (LOTES.every((l) => atrib[l.id] === l.categoria)) {
-      setGlobalMsg({
-        tipo: "ok",
-        texto: "Ótimo! Você classificou os lotes com base nas evidências.",
-      });
-    } else {
-      setGlobalMsg({
-        tipo: "erro",
-        texto:
-          "Ainda há decisões que precisam ser revistas. Analise novamente os resultados microbiológicos antes de avançar.",
-      });
-    }
   }
 
   return (
@@ -69,9 +64,9 @@ export function Classificacao({ onNext }: { onNext: () => void }) {
       <div className="flex-1 space-y-2.5 overflow-y-auto pr-1">
         {LOTES.map((l) => {
           const escolha = atrib[l.id];
-          const foiVerificado = checked[l.id];
-          const correto = foiVerificado && escolha === l.categoria;
-          const errado = foiVerificado && escolha !== null && escolha !== l.categoria;
+          const correto = verificado && escolha === l.categoria;
+          const errado =
+            verificado && escolha !== null && escolha !== l.categoria;
           const resultadoEmItalico = l.resultado.replace(
             /Pseudomonas aeruginosa/g,
             "@@P@@",
@@ -111,6 +106,7 @@ export function Classificacao({ onNext }: { onNext: () => void }) {
                     <button
                       key={c.key}
                       onClick={() => set(l.id, c.key)}
+                      disabled={verificado}
                       className="rounded-lg border px-2 py-2 text-[11px] font-medium leading-tight transition"
                       style={{
                         borderColor: ativo
@@ -129,76 +125,63 @@ export function Classificacao({ onNext }: { onNext: () => void }) {
                   );
                 })}
               </div>
-              <AnimatePresence>
-                {errado && (
-                  <motion.p
-                    key="err"
-                    initial={{ opacity: 0, y: -4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="mt-2 text-xs"
-                    style={{ color: "var(--color-destructive)" }}
-                  >
-                    {feedbackErro(l)}
-                  </motion.p>
-                )}
-                {correto && (
-                  <motion.p
-                    key="ok"
-                    initial={{ opacity: 0, y: -4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="mt-2 text-xs"
-                    style={{ color: "var(--color-success)" }}
-                  >
-                    ✓ Conduta adequada.
-                  </motion.p>
-                )}
-              </AnimatePresence>
             </div>
           );
         })}
       </div>
 
-      {globalMsg && (
-        <motion.div
-          initial={{ opacity: 0, y: 4 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-3 rounded-lg border px-3 py-2 text-xs"
-          style={{
-            borderColor:
-              globalMsg.tipo === "ok"
-                ? "var(--color-success)"
-                : "var(--color-destructive)",
-            color:
-              globalMsg.tipo === "ok"
-                ? "var(--color-success)"
-                : "var(--color-destructive)",
-            backgroundColor:
-              globalMsg.tipo === "ok"
-                ? "color-mix(in oklab, var(--color-success) 8%, transparent)"
-                : "color-mix(in oklab, var(--color-destructive) 8%, transparent)",
-          }}
-        >
-          {globalMsg.texto}
-        </motion.div>
-      )}
-
       <div className="pt-4">
-        {!allCorrect ? (
-          <Button
-            onClick={verificar}
-            disabled={!allSet}
-            className="h-12 w-full rounded-full text-base"
-          >
-            <Check className="mr-2 h-4 w-4" /> Verificar classificação
-          </Button>
-        ) : (
-          <Button onClick={onNext} className="h-12 w-full rounded-full text-base">
-            Continuar <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        )}
+        <Button
+          onClick={verificar}
+          disabled={!allSet || verificado}
+          className="h-12 w-full rounded-full text-base"
+        >
+          <Check className="mr-2 h-4 w-4" /> Verificar classificação
+        </Button>
       </div>
+
+      <FeedbackPanel
+        open={verificado}
+        tipo={allCorrect ? "acerto" : "erro"}
+        titulo={
+          allCorrect
+            ? "Classificação adequada"
+            : "Reveja os lotes destacados"
+        }
+        onRetry={tentarNovamente}
+        onContinue={onNext}
+        retryLabel="Reclassificar lotes"
+      >
+        {allCorrect ? (
+          <p>
+            Você classificou os lotes com base nas evidências
+            microbiológicas. Cada conduta sanitária está coerente com o
+            resultado analítico apresentado.
+          </p>
+        ) : (
+          <div className="space-y-3">
+            <p>
+              Ainda há decisões que precisam ser revistas. Retome os
+              resultados microbiológicos de cada lote antes de avançar.
+            </p>
+            <div>
+              <p className="mb-1 text-xs uppercase tracking-wider text-destructive">
+                Lotes a reanalisar
+              </p>
+              <ul className="list-disc space-y-1.5 pl-5">
+                {errados.map((l) => (
+                  <li key={l.id}>
+                    <span className="font-semibold">
+                      {l.produto} · Lote {l.lote}:
+                    </span>{" "}
+                    {feedbackErro(l)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+      </FeedbackPanel>
     </div>
   );
 }
