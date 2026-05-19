@@ -86,7 +86,7 @@ export const HIPOTESES = [
       "A água usada na produção pode ter apresentado contaminação microbiológica.",
     correta: true,
     feedback:
-      "Plausível. A água é um insumo crítico e pode ser fonte de contaminação se não for tratada e monitorada adequadamente.",
+      "Correto. A água usada na produção pode ser uma fonte de contaminação quando não há controle microbiológico adequado.",
   },
   {
     id: "B",
@@ -94,39 +94,31 @@ export const HIPOTESES = [
       "Biofilmes podem ter se formado em tubulações ou reservatórios.",
     correta: true,
     feedback:
-      "Plausível. Biofilmes protegem microrganismos como a Pseudomonas e são uma origem comum de contaminação recorrente em indústrias.",
+      "Correto. Biofilmes em tubulações ou reservatórios podem proteger microrganismos e dificultar a higienização.",
   },
   {
     id: "C",
     texto:
-      "Todos os produtos de limpeza do país estão contaminados.",
-    correta: false,
+      "Pode ter ocorrido falha na higienização de equipamentos industriais.",
+    correta: true,
     feedback:
-      "Não sustentada. Generalização sem evidências. Os dados se referem a lotes específicos, não a toda a categoria.",
+      "Correto. Falhas na limpeza dos equipamentos podem favorecer a permanência de bactérias no processo produtivo.",
   },
   {
     id: "D",
     texto:
-      "Pode ter ocorrido falha na higienização de equipamentos industriais.",
-    correta: true,
+      "A bactéria surgiu espontaneamente no frasco.",
+    correta: false,
     feedback:
-      "Plausível. Falhas em procedimentos de higienização são causas frequentes de contaminação cruzada entre lotes.",
+      "Ainda não. Bactérias não surgem espontaneamente no frasco; é preciso investigar fontes de contaminação no processo.",
   },
   {
     id: "E",
     texto:
-      "A bactéria surgiu espontaneamente dentro do frasco, sem relação com o processo de fabricação.",
-    correta: false,
-    feedback:
-      "Não sustentada. A geração espontânea de microrganismos foi refutada cientificamente há mais de um século.",
-  },
-  {
-    id: "F",
-    texto:
-      "A formulação ou os conservantes podem não ter sido suficientes para controlar esse microrganismo.",
+      "A formulação pode não ter controlado esse microrganismo.",
     correta: true,
     feedback:
-      "Plausível. Conservantes inadequados ou em concentração insuficiente podem permitir a sobrevivência de microrganismos resistentes.",
+      "Correto. A formulação ou os conservantes podem não ter sido suficientes para controlar esse tipo de microrganismo.",
   },
 ];
 
