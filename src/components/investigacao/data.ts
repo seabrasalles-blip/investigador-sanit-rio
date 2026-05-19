@@ -177,42 +177,42 @@ export const REESCRITA_OPCOES = [
   {
     id: "A",
     texto:
-      "“Produtos de limpeza podem estar contaminados. Para evitar riscos, recomenda-se interromper o uso de todos eles até que novas informações sejam divulgadas.”",
+      "Suspenda o uso de todos os produtos de limpeza até novas orientações.",
     correta: false,
     feedback:
-      "Ainda não. Essa mensagem parece preventiva, mas continua generalizando o problema. Ela recomenda interromper o uso de todos os produtos, mesmo que a investigação envolva apenas lotes específicos. Uma comunicação responsável deve orientar a verificação do lote e a consulta a fontes oficiais.",
+      "Essa mensagem generaliza o problema. A investigação envolve lotes específicos, não todos os produtos de limpeza.",
   },
   {
     id: "B",
     texto:
-      "“Há investigação sobre possíveis problemas em determinados lotes de produtos saneantes. Verifique o número do lote no rótulo e consulte as orientações oficiais da Anvisa e da empresa responsável.”",
+      "Verifique se o produto pertence a um lote investigado e consulte as orientações oficiais da Anvisa.",
     correta: true,
     feedback:
-      "Correto! Essa é a comunicação mais adequada porque informa o problema sem alarmismo, evita generalizações e orienta uma ação concreta: verificar o lote e consultar fontes oficiais, como a Anvisa e a empresa responsável.",
+      "Correto. A mensagem orienta a verificar o lote e consultar uma fonte oficial, evitando pânico e desinformação.",
   },
   {
     id: "C",
     texto:
-      "“A presença de bactérias em produtos de limpeza não representa risco relevante, por isso os consumidores podem continuar usando qualquer produto normalmente.”",
+      "Continue usando qualquer produto, pois a presença de bactérias não representa risco.",
     correta: false,
     feedback:
-      "Ainda não. Essa alternativa minimiza o risco. Embora a presença da bactéria não signifique perigo para todas as pessoas em qualquer situação, ela pode representar risco para grupos vulneráveis ou em contato com feridas e mucosas. Por isso, a orientação oficial deve ser seguida.",
+      "Essa mensagem minimiza o risco. Em alguns casos, a presença de microrganismos pode representar perigo, especialmente para pessoas vulneráveis.",
   },
   {
     id: "D",
     texto:
-      "“Como ainda existem dúvidas, a população deve aguardar novas mensagens nas redes sociais antes de decidir o que fazer com os produtos que possui em casa.”",
+      "Aguarde novas mensagens nas redes sociais antes de tomar uma decisão.",
     correta: false,
     feedback:
-      "Ainda não. Redes sociais não são a fonte mais segura para orientar decisões sobre saúde pública. O ideal é consultar comunicados oficiais e informações verificáveis, especialmente quando há risco sanitário envolvido.",
+      "Redes sociais não são a fonte mais segura para decisões sobre saúde pública. O ideal é consultar fontes oficiais.",
   },
   {
     id: "E",
     texto:
-      "“A contaminação de alguns produtos mostra que detergentes não são seguros e devem ser substituídos por soluções caseiras de limpeza.”",
+      "Substitua detergentes por soluções caseiras, pois são sempre mais seguras.",
     correta: false,
     feedback:
-      "Ainda não. Essa alternativa tira uma conclusão ampla demais a partir de um problema específico. A contaminação de alguns lotes não significa que todos os detergentes sejam inseguros. Além disso, soluções caseiras também podem apresentar riscos quando usadas sem orientação adequada.",
+      "Essa conclusão é inadequada. Soluções caseiras também podem oferecer riscos se usadas sem orientação.",
   },
 ];
 
