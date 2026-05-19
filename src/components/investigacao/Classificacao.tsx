@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Check } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LOTES, CATEGORIAS, type Lote } from "./data";
 import { FeedbackPanel } from "./FeedbackPanel";
@@ -20,27 +20,39 @@ export function Classificacao({ onNext }: { onNext: () => void }) {
   const [atrib, setAtrib] = useState<Atribuicao>(
     Object.fromEntries(LOTES.map((l) => [l.id, null])) as Atribuicao,
   );
+  const [idx, setIdx] = useState(0);
   const [verificado, setVerificado] = useState(false);
+
+  const total = LOTES.length;
+  const loteAtual = LOTES[idx];
+  const escolhaAtual = atrib[loteAtual.id];
+  const isUltimo = idx === total - 1;
 
   const allSet = Object.values(atrib).every(Boolean);
   const allCorrect =
     allSet && LOTES.every((l) => atrib[l.id] === l.categoria);
-
   const errados = LOTES.filter(
     (l) => atrib[l.id] !== null && atrib[l.id] !== l.categoria,
   );
 
-  function set(id: string, cat: Lote["categoria"]) {
+  function set(cat: Lote["categoria"]) {
     if (verificado) return;
-    setAtrib((a) => ({ ...a, [id]: cat }));
+    setAtrib((a) => ({ ...a, [loteAtual.id]: cat }));
   }
 
-  function verificar() {
-    setVerificado(true);
+  function avancar() {
+    if (isUltimo) {
+      setVerificado(true);
+    } else {
+      setIdx((i) => Math.min(i + 1, total - 1));
+    }
   }
 
   function tentarNovamente() {
     setVerificado(false);
+    const primeiroErrado = LOTES.findIndex(
+      (l) => atrib[l.id] !== null && atrib[l.id] !== l.categoria,
+    );
     setAtrib((a) => {
       const novo: Atribuicao = { ...a };
       errados.forEach((l) => {
@@ -48,7 +60,13 @@ export function Classificacao({ onNext }: { onNext: () => void }) {
       });
       return novo;
     });
+    if (primeiroErrado >= 0) setIdx(primeiroErrado);
   }
+
+  const resultadoEmItalico = loteAtual.resultado.replace(
+    /Pseudomonas aeruginosa/g,
+    "@@P@@",
+  );
 
   return (
     <div className="flex h-full flex-col px-6 py-7">
@@ -61,82 +79,98 @@ export function Classificacao({ onNext }: { onNext: () => void }) {
         </h2>
       </div>
 
-      <div className="flex-1 space-y-2.5 overflow-y-auto pr-1">
-        {LOTES.map((l) => {
-          const escolha = atrib[l.id];
-          const correto = verificado && escolha === l.categoria;
-          const errado =
-            verificado && escolha !== null && escolha !== l.categoria;
-          const resultadoEmItalico = l.resultado.replace(
-            /Pseudomonas aeruginosa/g,
-            "@@P@@",
-          );
-          return (
-            <div
-              key={l.id}
-              className="rounded-xl border border-border bg-card p-3 transition"
-              style={{
-                borderColor: correto
-                  ? "var(--color-success)"
-                  : errado
-                    ? "var(--color-destructive)"
-                    : undefined,
-              }}
-            >
-              <p className="text-sm font-semibold">
-                {l.produto}{" "}
-                <span className="font-normal text-muted-foreground">
-                  · Lote {l.lote}
-                </span>
-              </p>
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                {resultadoEmItalico.split("@@P@@").map((part, i, arr) => (
-                  <span key={i}>
-                    {part}
-                    {i < arr.length - 1 && (
-                      <em className="italic">Pseudomonas aeruginosa</em>
-                    )}
-                  </span>
-                ))}
-              </p>
-              <div className="mt-2.5 grid grid-cols-3 gap-1.5">
-                {CATEGORIAS.map((c) => {
-                  const ativo = escolha === c.key;
-                  return (
-                    <button
-                      key={c.key}
-                      onClick={() => set(l.id, c.key)}
-                      disabled={verificado}
-                      className="rounded-lg border px-2 py-2 text-[11px] font-medium leading-tight transition"
-                      style={{
-                        borderColor: ativo
-                          ? "var(--color-primary)"
-                          : "var(--color-border)",
-                        backgroundColor: ativo
-                          ? "color-mix(in oklab, var(--color-primary) 12%, transparent)"
-                          : "transparent",
-                        color: ativo
-                          ? "var(--color-primary)"
-                          : "var(--color-foreground)",
-                      }}
-                    >
-                      {c.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
+      <div className="mb-4 flex items-center justify-between px-1">
+        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          Lote {idx + 1} de {total}
+        </span>
+        <div className="flex items-center gap-1.5">
+          {LOTES.map((l, i) => {
+            const preenchido = atrib[l.id] !== null;
+            const ativo = i === idx;
+            return (
+              <span
+                key={l.id}
+                className="h-2 w-2 rounded-full transition"
+                style={{
+                  backgroundColor: ativo
+                    ? "var(--color-primary)"
+                    : preenchido
+                      ? "color-mix(in oklab, var(--color-primary) 45%, transparent)"
+                      : "var(--color-border)",
+                  transform: ativo ? "scale(1.25)" : "scale(1)",
+                }}
+              />
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col justify-center">
+        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+          <p className="text-sm font-semibold">
+            {loteAtual.produto}{" "}
+            <span className="font-normal text-muted-foreground">
+              · Lote {loteAtual.lote}
+            </span>
+          </p>
+          <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+            {resultadoEmItalico.split("@@P@@").map((part, i, arr) => (
+              <span key={i}>
+                {part}
+                {i < arr.length - 1 && (
+                  <em className="italic">Pseudomonas aeruginosa</em>
+                )}
+              </span>
+            ))}
+          </p>
+
+          <p className="mt-4 text-xs font-medium uppercase tracking-wider text-foreground/70">
+            Qual é a conduta sanitária adequada?
+          </p>
+          <div className="mt-2 flex flex-col gap-1.5">
+            {CATEGORIAS.map((c) => {
+              const ativo = escolhaAtual === c.key;
+              return (
+                <button
+                  key={c.key}
+                  onClick={() => set(c.key)}
+                  disabled={verificado}
+                  className="rounded-lg border px-3 py-2.5 text-left text-sm font-medium transition"
+                  style={{
+                    borderColor: ativo
+                      ? "var(--color-primary)"
+                      : "var(--color-border)",
+                    backgroundColor: ativo
+                      ? "color-mix(in oklab, var(--color-primary) 12%, transparent)"
+                      : "transparent",
+                    color: ativo
+                      ? "var(--color-primary)"
+                      : "var(--color-foreground)",
+                  }}
+                >
+                  {c.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       <div className="pt-4">
         <Button
-          onClick={verificar}
-          disabled={!allSet || verificado}
+          onClick={avancar}
+          disabled={!escolhaAtual || verificado}
           className="h-12 w-full rounded-full text-base"
         >
-          <Check className="mr-2 h-4 w-4" /> Verificar classificação
+          {isUltimo ? (
+            <>
+              <Check className="mr-2 h-4 w-4" /> Verificar classificação
+            </>
+          ) : (
+            <>
+              Próximo lote <ArrowRight className="ml-2 h-4 w-4" />
+            </>
+          )}
         </Button>
       </div>
 
